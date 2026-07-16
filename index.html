@@ -7,11 +7,9 @@
     
     <!-- Librerías Necesarias -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js (defer es super importante para el reloj) -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- Confeti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <!-- Fuentes Premium -->
@@ -27,6 +25,7 @@
         .font-serif-elegant { font-family: 'Playfair Display', serif; }
         .font-cursive { font-family: 'Great Vibes', cursive; }
         
+        /* Paleta Rosa / Café Claro */
         .primary-color { color: #D48C9A; }
         .primary-bg { background-color: #D48C9A; }
         .text-brown { color: #8C6A5D; }
@@ -36,7 +35,6 @@
         .fade-in-up { animation: fadeInUp 1.2s ease-out forwards; opacity: 0; transform: translateY(30px); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* Fondo del Hero */
         .hero-bg {
             background-image: 
                 linear-gradient(to bottom, rgba(140, 106, 93, 0.4), rgba(92, 74, 68, 0.8)),
@@ -54,20 +52,52 @@
         .flower:hover { transform: scale(1.5) rotate(15deg); }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* === ESTILOS DEL SOBRE Y BOLETO === */
+        /* === ESTILOS DEL SOBRE MEDIEVAL / AESTHETIC === */
         #envelope-screen {
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+            background-color: #0f172a; /* Fondo de noche oscura */
+            background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
         .envelope-open {
             transform: translateY(-100vh);
             opacity: 0;
             pointer-events: none;
         }
-        .wax-seal {
-            box-shadow: 0 4px 15px rgba(212, 140, 154, 0.6), inset 0 -3px 6px rgba(0,0,0,0.1);
+        
+        /* Estrellitas mágicas flotando de fondo */
+        .star-magic {
+            position: absolute;
+            color: #FDE047;
+            text-shadow: 0 0 10px rgba(253, 224, 71, 0.8);
+            animation: twinkle linear infinite;
+            z-index: 10;
         }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Sobre tipo pergamino */
+        .envelope-medieval {
+            background-color: #E8D8B8; /* Color pergamino */
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(139, 69, 19, 0.1);
+            border: 1px solid rgba(139, 69, 19, 0.2);
+        }
+        /* Dobleces de la carta */
+        .envelope-flap {
+            clip-path: polygon(0 0, 100% 0, 50% 55%);
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Sello de cera Medieval (Rojo Sangre) */
+        .wax-seal {
+            background-color: #722F37; /* Burgundy / Vino */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2);
+        }
+
         .ticket-cutout {
-            /* Efecto de boleto con recortes en los lados */
             mask-image: radial-gradient(circle at 0 50%, transparent 10px, black 11px), radial-gradient(circle at 100% 50%, transparent 10px, black 11px);
             mask-size: 51% 100%;
             mask-repeat: no-repeat;
@@ -82,31 +112,36 @@
 
 <body x-data="invitationApp()" x-init="initApp()" class="relative antialiased overflow-hidden" id="body-container">
 
-    <div id="envelope-screen" class="fixed inset-0 z-[100] bg-[#FDF9F9] flex flex-col items-center justify-center bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
+    <!-- === PANTALLA 1: EL SOBRE MEDIEVAL MÁGICO === -->
+    <div id="envelope-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center relative overflow-hidden">
         
-        <div class="text-center mb-10 px-4 animate-pulse">
-            <p class="font-serif-elegant text-[#8C6A5D] tracking-widest text-xs md:text-sm uppercase mb-3">De los novios con mucho amor para:</p>
-            <h2 id="envelope-name" class="font-cursive text-5xl md:text-6xl text-[#D48C9A] leading-tight">Familia Invitada</h2>
+        <!-- Contenedor para la lluvia de estrellas -->
+        <div id="magic-stars-container" class="absolute inset-0 pointer-events-none"></div>
+
+        <div class="text-center mb-10 px-4 animate-pulse relative z-20">
+            <p class="font-serif-elegant text-[#E8D8B8] tracking-widest text-xs md:text-sm uppercase mb-3 drop-shadow-md">De los novios con mucho amor para:</p>
+            <h2 id="envelope-name" class="font-cursive text-5xl md:text-6xl text-white leading-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Familia Invitada</h2>
         </div>
 
         <!-- El Sobre Virtual -->
-        <div onclick="abrirSobre()" class="relative w-80 h-52 bg-[#F3E8E6] rounded-xl shadow-2xl flex items-center justify-center cursor-pointer group border border-pink-100 transform hover:scale-105 transition-transform duration-300">
+        <div onclick="abrirSobre()" class="envelope-medieval relative w-[90vw] md:w-[500px] h-64 md:h-72 rounded-sm flex items-center justify-center cursor-pointer group transform hover:scale-105 transition-transform duration-300 z-20">
             <!-- Solapa superior simulada -->
-            <div class="absolute top-0 left-0 w-full h-1/2 bg-white/40 rounded-t-xl" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+            <div class="envelope-flap absolute top-0 left-0 w-full h-full pointer-events-none"></div>
             
             <!-- Sello de Cera -->
-            <div class="wax-seal w-20 h-20 bg-[#D48C9A] rounded-full flex items-center justify-center z-20 group-hover:bg-[#B5747F] transition-colors">
-                <div class="w-16 h-16 rounded-full border-2 border-white/30 flex items-center justify-center">
-                    <span class="font-serif-elegant text-2xl text-white">S&M</span>
+            <div class="wax-seal w-24 h-24 rounded-full flex items-center justify-center z-20 group-hover:bg-[#5a232b] transition-colors relative">
+                <div class="w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center">
+                    <span class="font-serif-elegant text-3xl text-white/90" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">S&M</span>
                 </div>
             </div>
             
-            <p class="absolute bottom-6 text-[10px] uppercase tracking-widest text-[#8C6A5D] font-bold bg-white/50 px-4 py-1 rounded-full backdrop-blur-sm group-hover:bg-white transition-colors">
-                Tocar para abrir
+            <p class="absolute bottom-6 text-[10px] uppercase tracking-widest text-[#722F37] font-bold bg-[#E8D8B8]/80 px-6 py-2 rounded-full shadow-sm group-hover:bg-white transition-colors border border-[#722F37]/20">
+                Tocar sello para abrir
             </p>
         </div>
     </div>
 
+    <!-- === INVITACIÓN PRINCIPAL === -->
     <header class="hero-bg min-h-screen flex flex-col items-center justify-center relative px-4 text-center">
         <div class="absolute inset-4 md:inset-8 border border-white/30 rounded-sm pointer-events-none"></div>
         <div class="absolute inset-5 md:inset-9 border border-white/10 rounded-sm pointer-events-none"></div>
@@ -143,6 +178,7 @@
         </div>
     </section>
 
+    <!-- CUENTA REGRESIVA -->
     <section class="py-16 px-4 bg-white border-y border-pink-50 text-center">
         <h2 class="font-serif-elegant text-sm uppercase tracking-[0.3em] text-[#8C6A5D] mb-10">Faltan</h2>
         
@@ -164,6 +200,7 @@
         </div>
     </section>
 
+    <!-- ITINERARIO DE COMIDA Y EVENTOS -->
     <section class="py-24 px-4 bg-[#FDF9F9] relative overflow-hidden">
         <div class="absolute top-0 left-0 w-64 h-64 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 0 0, #D48C9A 0%, transparent 70%);"></div>
         <div class="absolute bottom-0 right-0 w-64 h-64 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 100% 100%, #D48C9A 0%, transparent 70%);"></div>
@@ -183,8 +220,7 @@
                     </div>
                     <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Ceremonia</h3>
                     <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">18:00 Hrs</p>
-                    <p class="font-serif-elegant font-bold text-gray-800 mb-1">Locación del Evento</p>
-                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">El "Sí, acepto" rodeados de nuestra familia.</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">El "Sí, acepto" en nuestras hermosas instalaciones.</p>
                     <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-4 py-2 text-[9px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
                         Ver Mapa
                     </button>
@@ -197,7 +233,7 @@
                     </div>
                     <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Cóctel</h3>
                     <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">19:30 Hrs</p>
-                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Bebidas y canapés de bienvenida para entrar en ambiente.</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Bebidas refrescantes y canapés de bienvenida para entrar en ambiente.</p>
                 </div>
 
                 <!-- Banquete -->
@@ -207,11 +243,7 @@
                     </div>
                     <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Banquete</h3>
                     <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">20:30 Hrs</p>
-                    <p class="font-serif-elegant font-bold text-gray-800 mb-1">Locación del Evento</p>
                     <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Acompáñanos a disfrutar de una exquisita cena a tres tiempos.</p>
-                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-4 py-2 text-[9px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
-                        Ver Mapa
-                    </button>
                 </div>
 
                 <!-- Fiesta -->
@@ -252,6 +284,7 @@
         </div>
     </section>
 
+    <!-- === EL BOLETO VIP (SIN CÓDIGO CELULAR) === -->
     <section id="pase-acceso" class="py-24 px-4 bg-[#5C4A44] relative text-white">
         <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#FDF9F9 2px, transparent 2px); background-size: 30px 30px;"></div>
         
@@ -261,7 +294,7 @@
                 <p class="text-[#D48C9A] text-xs uppercase tracking-widest font-bold">Reserva de Accesos</p>
             </div>
 
-            <!-- Botón Sorpresa (Antes de abrir el boleto) -->
+            <!-- Botón Sorpresa para revelar boleto -->
             <div id="ticket-cover" class="text-center">
                 <p class="text-sm text-pink-100/80 mb-6 font-light">Toca el botón para desplegar tu pase oficial y código de recepción.</p>
                 <button onclick="revelarBoleto()" class="w-full bg-[#D48C9A] text-white py-5 rounded-full font-bold uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(212,140,154,0.5)] hover:bg-[#B5747F] hover:scale-105 transition-all flex items-center justify-center gap-3">
@@ -289,7 +322,7 @@
                             <div class="absolute -right-10 -top-3 w-6 h-6 bg-[#5C4A44] rounded-full"></div>
                         </div>
 
-                        <!-- Contenedor del QR -->
+                        <!-- Contenedor del QR que abrirá recepcion.html -->
                         <div class="p-3 bg-white border border-gray-200 rounded-xl shadow-inner inline-block mb-2">
                             <div id="qrcode-container" class="w-[150px] h-[150px] flex items-center justify-center"></div>
                         </div>
@@ -306,6 +339,7 @@
         </div>
     </section>
 
+    <!-- === AUDIO Y BOTÓN MÚSICA === -->
     <audio id="bg-music" loop preload="auto">
         <source src="cancion.mp3#t=35" type="audio/mpeg">
     </audio>
@@ -314,6 +348,7 @@
         <i data-lucide="volume-2" id="music-icon" class="w-6 h-6"></i>
     </button>
 
+    <!-- === SCRIPT PRINCIPAL === -->
     <script>
         // Variables globales
         let invitadoUrl = "Invitado Especial";
@@ -321,7 +356,7 @@
         let bgMusic, musicIcon, musicControl;
         let isPlaying = false;
 
-        // Función 1: Preparar la app y leer URL
+        // Leer datos del enlace (Ej: ?id=Familia-Gomez-b4)
         function procesarURL() {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
@@ -331,12 +366,12 @@
                 if(partes.length > 1) { boletosUrl = partes[1]; }
             }
             
-            // Llenar datos en el Sobre y en el Boleto
+            // Asignar en el sobre y en el boleto VIP
             document.getElementById('envelope-name').innerText = invitadoUrl;
             document.getElementById('nombre-display').innerText = invitadoUrl;
             document.getElementById('boletos-display').innerText = boletosUrl;
 
-            // Generar el QR
+            // Generar el QR que apunte a la página elegante de Recepción
             const urlBase = window.location.href.split('?')[0].replace('boda_demo.html', '');
             const baseUrlClean = urlBase.endsWith('/') ? urlBase : urlBase + '/';
             const enlaceRecepcion = baseUrlClean + "recepcion.html?invitado=" + encodeURIComponent(invitadoUrl) + "&boletos=" + encodeURIComponent(boletosUrl);
@@ -347,9 +382,8 @@
             });
         }
 
-        // Función 2: Abrir el Sobre Mágico
+        // Función del Sello: Abre el sobre, lanza confeti y REPRODUCE LA MÚSICA
         window.abrirSobre = function() {
-            // Animación del sobre
             const sobre = document.getElementById('envelope-screen');
             sobre.classList.add('envelope-open');
             document.getElementById('body-container').classList.remove('overflow-hidden');
@@ -357,43 +391,49 @@
             // ¡Lluvia de confeti de bienvenida!
             lanzarConfeti();
 
-            // Iniciar Música y mostrar botón de control
-            bgMusic.play().then(() => {
-                isPlaying = true;
-                musicControl.classList.remove('hidden');
-                musicControl.classList.add('flex');
-                musicIcon.setAttribute('data-lucide', 'volume-2');
-                lucide.createIcons();
-            }).catch(e => console.log("El navegador bloqueó el audio", e));
+            // Iniciar Música desde el seg 35 y mostrar botón de control
+            if (bgMusic) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicControl.classList.remove('hidden');
+                    musicControl.classList.add('flex');
+                    musicIcon.setAttribute('data-lucide', 'volume-2');
+                    lucide.createIcons();
+                }).catch(e => {
+                    console.log("El navegador bloqueó el audio", e);
+                    // Si el navegador lo bloquea, aún así mostramos el botón para que lo toquen manual
+                    musicControl.classList.remove('hidden');
+                    musicControl.classList.add('flex');
+                    musicIcon.setAttribute('data-lucide', 'volume-x');
+                    lucide.createIcons();
+                });
+            }
         }
 
-        // Función 3: Revelar el Boleto VIP
+        // Función para mostrar el Boleto de Acceso
         window.revelarBoleto = function() {
             const cover = document.getElementById('ticket-cover');
             const ticket = document.getElementById('ticket-revealed');
 
-            // Ocultar botón inicial
             cover.classList.add('hidden');
-            
-            // Mostrar boleto con animación
             ticket.classList.remove('hidden');
             setTimeout(() => {
                 ticket.classList.remove('scale-95', 'opacity-0');
                 ticket.classList.add('scale-100', 'opacity-100');
             }, 50);
 
-            // ¡Lluvia de confeti en el boleto!
+            // ¡Confeti en el boleto!
             lanzarConfeti(true);
         }
 
-        // Utilidad: Lanza confeti
+        // Función para el Confeti
         function lanzarConfeti(desdeAbajo = false) {
             const defaults = { origin: { y: desdeAbajo ? 0.8 : 0.4 }, zIndex: 150, colors: ['#D48C9A', '#ffffff', '#8C6A5D'] };
             confetti(Object.assign({}, defaults, { particleCount: 60, spread: 50 }));
             setTimeout(() => confetti(Object.assign({}, defaults, { particleCount: 40, spread: 80 })), 250);
         }
 
-        // Configuración de Alpine y Reloj
+        // Alpine.js APP
         window.invitationApp = function() {
             return {
                 days: '00', hours: '00', minutes: '00',
@@ -402,6 +442,7 @@
                 initApp() {
                     procesarURL(); 
                     lucide.createIcons(); 
+                    this.setupMusic();      // ESTA ERA LA LÍNEA QUE FALTABA
                     this.startFlowers();
                     this.spawnMagicStars();
 
@@ -415,15 +456,19 @@
                     }, 1000);
                 },
 
+                // Configuración de la música y eventos de clic
                 setupMusic() {
                     bgMusic = document.getElementById('bg-music');
                     musicControl = document.getElementById('music-control');
                     musicIcon = document.getElementById('music-icon');
                     
-                    bgMusic.addEventListener('loadedmetadata', () => bgMusic.currentTime = 35);
-                    if (bgMusic.readyState >= 1) bgMusic.currentTime = 35;
+                    // Forzamos el tiempo de inicio al segundo 35
+                    bgMusic.addEventListener('loadedmetadata', () => { bgMusic.currentTime = 35; });
+                    if (bgMusic.readyState >= 1) { bgMusic.currentTime = 35; }
 
+                    // Clic en el botón flotante para pausar/reproducir
                     musicControl.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         if (isPlaying) {
                             bgMusic.pause();
                             musicIcon.setAttribute('data-lucide', 'volume-x');
@@ -436,6 +481,7 @@
                     });
                 },
 
+                // Flores interactivas
                 startFlowers() {
                     const icons = ['🌸', '💮', '✨', '🤍'];
                     setInterval(() => {
@@ -447,6 +493,7 @@
                         el.style.animationDuration = (Math.random() * 5 + 5) + 's';
                         el.style.opacity = Math.random() * 0.6 + 0.4;
                         
+                        // Clic a la flor = Confeti
                         el.addEventListener('click', (e) => {
                             e.stopPropagation();
                             confetti({ origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }, colors: ['#D48C9A', '#ffffff'] });
@@ -458,17 +505,16 @@
                     }, 800);
                 },
 
+                // Lluvia de Estrellas del Sobre
                 spawnMagicStars() {
                     const container = document.getElementById('magic-stars-container');
                     const starIcons = ['✨', '✦', '⋆', '✧'];
                     
-                    // Creamos 35 estrellas flotantes
                     for(let i=0; i<35; i++) {
                         const star = document.createElement('div');
                         star.classList.add('star-magic');
                         star.innerText = starIcons[Math.floor(Math.random() * starIcons.length)];
                         
-                        // Posición y animaciones aleatorias
                         star.style.left = Math.random() * 100 + 'vw';
                         star.style.top = Math.random() * 100 + 'vh';
                         star.style.fontSize = (Math.random() * 15 + 10) + 'px';
