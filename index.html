@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Boda - Sofía & Mateo</title>
     
-    <!-- Librerías Necesarias -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
-    <!-- Fuentes Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -31,7 +29,6 @@
         .text-brown { color: #8C6A5D; }
         .text-dark-brown { color: #5C4A44; }
 
-        /* Animaciones suaves */
         .fade-in-up { animation: fadeInUp 1.2s ease-out forwards; opacity: 0; transform: translateY(30px); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -44,7 +41,6 @@
             background-attachment: fixed;
         }
 
-        /* Florecitas Interactivas */
         .flower {
             position: fixed; top: -10vh; z-index: 40; user-select: none; cursor: pointer;
             transition: transform 0.2s; animation: fall linear forwards; filter: drop-shadow(0 2px 4px rgba(212, 140, 154, 0.3));
@@ -52,19 +48,18 @@
         .flower:hover { transform: scale(1.5) rotate(15deg); }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* === ESTILOS DEL SOBRE MEDIEVAL / AESTHETIC === */
+        /* ESTILOS DEL SOBRE MEDIEVAL / AESTHETIC */
         #envelope-screen {
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
-            background-color: #0f172a; /* Fondo de noche oscura */
+            background-color: #0f172a; 
             background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
         .envelope-open {
-            transform: translateY(-100vh);
+            transform: translateY(-100vh) scale(0.95);
             opacity: 0;
             pointer-events: none;
         }
         
-        /* Estrellitas mágicas flotando de fondo */
         .star-magic {
             position: absolute;
             color: #FDE047;
@@ -77,23 +72,21 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Sobre tipo pergamino */
         .envelope-medieval {
-            background-color: #E8D8B8; /* Color pergamino */
+            background-color: #E8D8B8; 
             background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(139, 69, 19, 0.1);
             border: 1px solid rgba(139, 69, 19, 0.2);
         }
-        /* Dobleces de la carta */
+        
         .envelope-flap {
             clip-path: polygon(0 0, 100% 0, 50% 55%);
             background-color: rgba(255, 255, 255, 0.3);
             box-shadow: inset 0 -2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Sello de cera Medieval (Rojo Sangre) */
         .wax-seal {
-            background-color: #722F37; /* Burgundy / Vino */
+            background-color: #722F37; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2);
         }
 
@@ -118,18 +111,18 @@
         <!-- Contenedor para la lluvia de estrellas -->
         <div id="magic-stars-container" class="absolute inset-0 pointer-events-none"></div>
 
-        <div class="text-center mb-10 px-4 animate-pulse relative z-20">
+        <div class="text-center mb-10 px-4 animate-pulse relative z-20 mt-10">
             <p class="font-serif-elegant text-[#E8D8B8] tracking-widest text-xs md:text-sm uppercase mb-3 drop-shadow-md">De los novios con mucho amor para:</p>
-            <h2 id="envelope-name" class="font-cursive text-5xl md:text-6xl text-white leading-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Familia Invitada</h2>
+            <h2 id="envelope-name" class="font-cursive text-5xl md:text-6xl text-white leading-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] px-2 text-center">Familia Invitada</h2>
         </div>
 
-        <!-- El Sobre Virtual -->
-        <div onclick="abrirSobre()" class="envelope-medieval relative w-[90vw] md:w-[500px] h-64 md:h-72 rounded-sm flex items-center justify-center cursor-pointer group transform hover:scale-105 transition-transform duration-300 z-20">
+        <!-- El Sobre Virtual responsivo -->
+        <div onclick="abrirSobre()" class="envelope-medieval relative w-[90vw] max-w-[500px] h-[60vh] max-h-[300px] rounded-sm flex items-center justify-center cursor-pointer group transform hover:scale-105 transition-transform duration-300 z-20 shadow-2xl">
             <!-- Solapa superior simulada -->
             <div class="envelope-flap absolute top-0 left-0 w-full h-full pointer-events-none"></div>
             
             <!-- Sello de Cera -->
-            <div class="wax-seal w-24 h-24 rounded-full flex items-center justify-center z-20 group-hover:bg-[#5a232b] transition-colors relative">
+            <div class="wax-seal w-24 h-24 rounded-full flex items-center justify-center z-20 group-hover:bg-[#5a232b] transition-colors relative shadow-2xl">
                 <div class="w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center">
                     <span class="font-serif-elegant text-3xl text-white/90" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">S&M</span>
                 </div>
@@ -160,7 +153,7 @@
             <div class="w-24 h-px bg-[#D48C9A] my-8"></div>
             
             <p class="text-sm font-medium uppercase tracking-[0.3em] text-white mb-3">05 · Septiembre · 2026</p>
-            <p class="text-[10px] uppercase tracking-[0.2em] text-pink-100/80">Estado de México</p>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-pink-100/80">A las 18:00 Hrs</p>
         </div>
         
         <div class="absolute bottom-10 animate-bounce text-pink-100/70">
@@ -178,24 +171,30 @@
         </div>
     </section>
 
-    <!-- CUENTA REGRESIVA -->
+    <!-- CUENTA REGRESIVA (CON SEGUNDOS INTEGRADOS) -->
     <section class="py-16 px-4 bg-white border-y border-pink-50 text-center">
         <h2 class="font-serif-elegant text-sm uppercase tracking-[0.3em] text-[#8C6A5D] mb-10">Faltan</h2>
         
-        <div class="flex justify-center gap-4 md:gap-8 max-w-lg mx-auto">
-            <div class="flex flex-col items-center">
+        <!-- Contenedor adaptativo para que quepan los 4 elementos en celular -->
+        <div class="flex justify-center gap-3 sm:gap-6 md:gap-8 max-w-2xl mx-auto">
+            <div class="flex flex-col items-center min-w-[60px]">
                 <span class="font-serif-elegant text-4xl md:text-5xl primary-color font-normal" x-text="days">00</span>
-                <span class="text-[9px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Días</span>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Días</span>
             </div>
-            <span class="text-3xl text-pink-100 font-light hidden md:block">:</span>
-            <div class="flex flex-col items-center">
+            <span class="text-3xl text-pink-100 font-light hidden sm:block">:</span>
+            <div class="flex flex-col items-center min-w-[60px]">
                 <span class="font-serif-elegant text-4xl md:text-5xl primary-color font-normal" x-text="hours">00</span>
-                <span class="text-[9px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Hrs</span>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Hrs</span>
             </div>
-            <span class="text-3xl text-pink-100 font-light hidden md:block">:</span>
-            <div class="flex flex-col items-center">
+            <span class="text-3xl text-pink-100 font-light hidden sm:block">:</span>
+            <div class="flex flex-col items-center min-w-[60px]">
                 <span class="font-serif-elegant text-4xl md:text-5xl primary-color font-normal" x-text="minutes">00</span>
-                <span class="text-[9px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Min</span>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Min</span>
+            </div>
+            <span class="text-3xl text-pink-100 font-light hidden sm:block">:</span>
+            <div class="flex flex-col items-center min-w-[60px]">
+                <span class="font-serif-elegant text-4xl md:text-5xl primary-color font-normal" x-text="seconds">00</span>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-[#8C6A5D] mt-3 font-medium">Seg</span>
             </div>
         </div>
     </section>
@@ -209,7 +208,7 @@
             <div class="text-center mb-16">
                 <h2 class="font-serif-elegant text-3xl md:text-4xl text-dark-brown mb-4">Nuestro Itinerario</h2>
                 <div class="w-16 h-px bg-[#D48C9A] mx-auto mb-4"></div>
-                <p class="text-[#8C6A5D] font-light italic">Momentos inolvidables que compartiremos</p>
+                <p class="text-[#8C6A5D] font-light italic text-sm">Todas las celebraciones se llevarán a cabo en las mismas instalaciones.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -220,7 +219,7 @@
                     </div>
                     <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Ceremonia</h3>
                     <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">18:00 Hrs</p>
-                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">El "Sí, acepto" en nuestras hermosas instalaciones.</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Acompáñanos a dar el "Sí, acepto" en nuestras hermosas instalaciones.</p>
                     <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-4 py-2 text-[9px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
                         Ver Mapa
                     </button>
@@ -284,8 +283,8 @@
         </div>
     </section>
 
-    <!-- === EL BOLETO VIP (SIN CÓDIGO CELULAR) === -->
-    <section id="pase-acceso" class="py-24 px-4 bg-[#5C4A44] relative text-white">
+    <!-- === EL BOLETO VIP (AUTOMÁTICO) === -->
+    <section id="pase-acceso" class="py-24 px-4 bg-[#5C4A44] relative text-white overflow-hidden">
         <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#FDF9F9 2px, transparent 2px); background-size: 30px 30px;"></div>
         
         <div class="max-w-md mx-auto relative z-10">
@@ -310,7 +309,7 @@
                         <i data-lucide="check-circle-2" class="w-12 h-12 text-emerald-500 mx-auto mb-4 bg-white rounded-full"></i>
                         
                         <p class="text-[8px] uppercase tracking-widest text-[#8C6A5D] mb-1 font-bold">Invitado de Honor</p>
-                        <p id="nombre-display" class="font-serif-elegant font-bold text-2xl text-dark-brown mb-4">Familia Invitada</p>
+                        <p id="nombre-display" class="font-serif-elegant font-bold text-2xl text-dark-brown mb-4 px-2">Familia Invitada</p>
                         
                         <div class="inline-block bg-[#D48C9A] text-white px-8 py-2 rounded-full text-sm font-bold uppercase tracking-[0.2em] mb-6 shadow-md">
                             <span id="boletos-display">2</span> Boletos
@@ -329,7 +328,7 @@
 
                         <div class="text-center mt-3">
                             <p class="text-[10px] uppercase tracking-widest text-[#8C6A5D] font-bold mb-1">Muestra este código</p>
-                            <p class="text-[9px] text-gray-500 leading-relaxed px-2">En la entrada del evento para facilitar tu acceso.</p>
+                            <p class="text-[9px] text-gray-500 leading-relaxed px-2">En la entrada del evento para facilitar tu acceso y ubicar tu mesa.</p>
                         </div>
                     </div>
                 </div>
@@ -344,8 +343,8 @@
         <source src="cancion.mp3#t=35" type="audio/mpeg">
     </audio>
 
-    <button id="music-control" class="fixed bottom-6 right-6 z-50 bg-white text-[#D48C9A] w-14 h-14 rounded-full shadow-[0_4px_20px_rgba(212,140,154,0.4)] hover:bg-pink-50 transition-all border border-pink-200 hidden items-center justify-center animate-pulse">
-        <i data-lucide="volume-2" id="music-icon" class="w-6 h-6"></i>
+    <button id="music-control" class="fixed bottom-6 right-6 z-50 bg-white text-[#D48C9A] w-14 h-14 rounded-full shadow-[0_4px_20px_rgba(212,140,154,0.4)] hover:bg-pink-50 transition-all border border-pink-200 flex items-center justify-center animate-pulse">
+        <i data-lucide="volume-x" id="music-icon" class="w-6 h-6"></i>
     </button>
 
     <!-- === SCRIPT PRINCIPAL === -->
@@ -391,21 +390,15 @@
             // ¡Lluvia de confeti de bienvenida!
             lanzarConfeti();
 
-            // Iniciar Música desde el seg 35 y mostrar botón de control
-            if (bgMusic) {
+            // Iniciar Música desde el seg 35 y cambiar el icono
+            if (bgMusic && !isPlaying) {
                 bgMusic.play().then(() => {
                     isPlaying = true;
-                    musicControl.classList.remove('hidden');
-                    musicControl.classList.add('flex');
+                    musicControl.classList.remove('animate-pulse');
                     musicIcon.setAttribute('data-lucide', 'volume-2');
                     lucide.createIcons();
                 }).catch(e => {
                     console.log("El navegador bloqueó el audio", e);
-                    // Si el navegador lo bloquea, aún así mostramos el botón para que lo toquen manual
-                    musicControl.classList.remove('hidden');
-                    musicControl.classList.add('flex');
-                    musicIcon.setAttribute('data-lucide', 'volume-x');
-                    lucide.createIcons();
                 });
             }
         }
@@ -433,16 +426,16 @@
             setTimeout(() => confetti(Object.assign({}, defaults, { particleCount: 40, spread: 80 })), 250);
         }
 
-        // Alpine.js APP
+        // Alpine.js APP (CON SEGUNDOS INTEGRADOS)
         window.invitationApp = function() {
             return {
-                days: '00', hours: '00', minutes: '00',
+                days: '00', hours: '00', minutes: '00', seconds: '00',
                 targetDate: new Date('September 05, 2026 18:00:00').getTime(),
 
                 initApp() {
                     procesarURL(); 
                     lucide.createIcons(); 
-                    this.setupMusic();      // ESTA ERA LA LÍNEA QUE FALTABA
+                    this.setupMusic();      
                     this.startFlowers();
                     this.spawnMagicStars();
 
@@ -453,6 +446,8 @@
                         this.days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
                         this.hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
                         this.minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                        // Se calculan y actualizan los segundos correctamente
+                        this.seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
                     }, 1000);
                 },
 
@@ -472,9 +467,11 @@
                         if (isPlaying) {
                             bgMusic.pause();
                             musicIcon.setAttribute('data-lucide', 'volume-x');
+                            musicControl.classList.add('animate-pulse');
                         } else {
                             bgMusic.play();
                             musicIcon.setAttribute('data-lucide', 'volume-2');
+                            musicControl.classList.remove('animate-pulse');
                         }
                         isPlaying = !isPlaying;
                         lucide.createIcons();
