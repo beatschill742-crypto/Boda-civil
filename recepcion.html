@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida - Recepción</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #FDF9F9;
+            color: #5C4A44;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .font-serif-elegant { font-family: 'Playfair Display', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .primary-color { color: #D48C9A; }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 text-center border border-pink-50 relative overflow-hidden">
+        
+        <!-- Elementos decorativos -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-[#D48C9A]"></div>
+        <i data-lucide="flower-2" class="w-12 h-12 primary-color mx-auto mb-6 opacity-60"></i>
+        
+        <h2 class="font-cursive text-5xl primary-color mb-2">¡Bienvenidos!</h2>
+        <p class="font-serif-elegant text-sm uppercase tracking-widest text-[#8C6A5D] mb-8 border-b border-pink-50 pb-4">Recepción de Nuestra Boda</p>
+        
+        <p class="text-sm text-gray-500 mb-6 italic">Qué alegría compartir este momento tan especial con ustedes.</p>
+        
+        <div class="bg-[#FDF9F9] border border-pink-100 rounded-xl p-6 mb-8">
+            <p class="text-[9px] uppercase tracking-widest text-[#8C6A5D] font-bold mb-1">Pase Válido Para:</p>
+            <p id="nombre-recepcion" class="font-serif-elegant text-2xl text-dark-brown font-bold mb-3">Buscando...</p>
+            <div class="inline-flex items-center justify-center bg-white border border-[#D48C9A] px-6 py-2 rounded-full shadow-sm">
+                <i data-lucide="ticket" class="w-4 h-4 text-[#D48C9A] mr-2"></i>
+                <span id="boletos-recepcion" class="text-xs font-bold uppercase tracking-widest text-[#8C6A5D]">-- Boletos</span>
+            </div>
+        </div>
+        
+        <p class="text-xs text-[#8C6A5D] font-medium">Por favor, pasen al salón.</p>
+        <p class="font-cursive text-2xl text-[#D48C9A] mt-4">Sofía & Mateo</p>
+    </div>
+
+    <script>
+        // Leer la información que viene del QR
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            const params = new URLSearchParams(window.location.search);
+            const invitado = params.get('invitado') || 'Invitado Especial';
+            const boletos = params.get('boletos') || '1';
+            
+            document.getElementById('nombre-recepcion').innerText = invitado;
+            document.getElementById('boletos-recepcion').innerText = boletos + (boletos === '1' ? ' Boleto' : ' Boletos');
+        });
+    </script>
+</body>
+</html>
