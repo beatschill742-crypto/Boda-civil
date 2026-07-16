@@ -133,45 +133,62 @@
         </div>
     </section>
 
-    <!-- ITINERARIO -->
-    <section class="py-24 px-4 bg-[#FDF9F9]">
-        <div class="max-w-5xl mx-auto">
+    <!-- ITINERARIO Y TIEMPOS DE COMIDA -->
+    <section class="py-24 px-4 bg-[#FDF9F9] relative overflow-hidden">
+        <!-- Adornos Florales / Destellos en las esquinas -->
+        <div class="absolute top-0 left-0 w-64 h-64 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 0 0, #D48C9A 0%, transparent 70%);"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 100% 100%, #D48C9A 0%, transparent 70%);"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
             <div class="text-center mb-16">
-                <h2 class="font-serif-elegant text-3xl md:text-4xl text-dark-brown mb-4">Dónde & Cuándo</h2>
-                <div class="w-16 h-px bg-[#D48C9A] mx-auto"></div>
+                <h2 class="font-serif-elegant text-3xl md:text-4xl text-dark-brown mb-4">Nuestro Itinerario</h2>
+                <div class="w-16 h-px bg-[#D48C9A] mx-auto mb-4"></div>
+                <p class="text-[#8C6A5D] font-light italic">Momentos inolvidables que compartiremos</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <!-- Ceremonia -->
-                <div class="bg-white p-10 shadow-xl text-center relative border border-pink-50 flex flex-col items-center h-full rounded-2xl">
-                    <div class="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center mb-6 border border-[#D48C9A]/30">
-                        <i data-lucide="church" class="w-7 h-7 primary-color"></i>
+                <div class="bg-white p-8 shadow-xl text-center relative border-t-4 border-[#D48C9A] flex flex-col items-center h-full rounded-2xl transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center mb-4 border border-[#D48C9A]/30">
+                        <i data-lucide="church" class="w-5 h-5 primary-color"></i>
                     </div>
-                    <h3 class="font-serif-elegant text-2xl text-dark-brown mb-2">Ceremonia</h3>
-                    <p class="text-sm uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-6">18:00 Hrs</p>
+                    <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Ceremonia</h3>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">18:00 Hrs</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">El "Sí, acepto" en nuestras hermosas instalaciones.</p>
                     
-                    <p class="font-serif-elegant font-bold text-dark-brown mb-1">Locación del Evento</p>
-                    <p class="text-xs text-[#8C6A5D] mb-8 font-light flex-grow">La ceremonia se llevará a cabo en nuestras instalaciones.</p>
-                    
-                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-6 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
-                        Ver Ubicación
+                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-4 py-2 text-[9px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
+                        Ver Mapa
                     </button>
                 </div>
 
-                <!-- Recepción -->
-                <div class="bg-white p-10 shadow-xl text-center relative border border-pink-50 flex flex-col items-center h-full rounded-2xl">
-                    <div class="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center mb-6 border border-[#D48C9A]/30">
-                        <i data-lucide="glass-water" class="w-7 h-7 primary-color"></i>
+                <!-- Cóctel de Bienvenida -->
+                <div class="bg-white p-8 shadow-xl text-center relative border-t-4 border-[#D48C9A] flex flex-col items-center h-full rounded-2xl transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center mb-4 border border-[#D48C9A]/30">
+                        <i data-lucide="wine" class="w-5 h-5 primary-color"></i>
                     </div>
-                    <h3 class="font-serif-elegant text-2xl text-dark-brown mb-2">Recepción</h3>
-                    <p class="text-sm uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-6">19:30 Hrs</p>
-                    
-                    <p class="font-serif-elegant font-bold text-dark-brown mb-1">Locación del Evento</p>
-                    <p class="text-xs text-[#8C6A5D] mb-8 font-light flex-grow">Acompáñanos a celebrar justo después de la ceremonia.</p>
-                    
-                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-[#8C6A5D] text-[#8C6A5D] px-6 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-[#8C6A5D] hover:text-white transition-colors duration-300 rounded-full">
-                        Ver Ubicación
-                    </button>
+                    <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Cóctel</h3>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">19:30 Hrs</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Bebidas refrescantes y canapés de bienvenida para entrar en ambiente.</p>
+                </div>
+
+                <!-- Banquete -->
+                <div class="bg-white p-8 shadow-xl text-center relative border-t-4 border-[#D48C9A] flex flex-col items-center h-full rounded-2xl transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center mb-4 border border-[#D48C9A]/30">
+                        <i data-lucide="utensils" class="w-5 h-5 primary-color"></i>
+                    </div>
+                    <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Banquete</h3>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">20:30 Hrs</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Acompáñanos a disfrutar de una exquisita cena a tres tiempos.</p>
+                </div>
+
+                <!-- Fiesta -->
+                <div class="bg-white p-8 shadow-xl text-center relative border-t-4 border-[#D48C9A] flex flex-col items-center h-full rounded-2xl transform hover:-translate-y-2 transition-all">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center mb-4 border border-[#D48C9A]/30">
+                        <i data-lucide="music" class="w-5 h-5 primary-color"></i>
+                    </div>
+                    <h3 class="font-serif-elegant text-xl text-dark-brown mb-1">Fiesta</h3>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#8C6A5D] font-bold mb-4">22:00 Hrs</p>
+                    <p class="text-[10px] text-[#8C6A5D] mb-6 font-light flex-grow">Nuestro primer baile oficial y música en vivo para celebrar.</p>
                 </div>
             </div>
         </div>
@@ -346,55 +363,67 @@
         }
     </script>
 
-    <!-- REPRODUCTOR DE MÚSICA Y BOTÓN FLOTANTE -->
+    <!-- REPRODUCTOR DE MÚSICA Y BOTÓN FLOTANTE (CORREGIDO Y VISIBLE) -->
     <audio id="bg-music" loop preload="auto">
-        <!-- NOTA: Asegúrate de que el archivo se llame exactamente 'cancion.mp3' y esté en la misma carpeta -->
         <!-- El #t=35 hace que intente iniciar en el segundo 35 -->
         <source src="cancion.mp3#t=35" type="audio/mpeg">
     </audio>
 
-    <button id="music-control" class="fixed bottom-6 right-6 z-50 bg-white text-[#D48C9A] p-4 rounded-full shadow-2xl hidden hover:bg-pink-50 transition-all transform hover:scale-105 border border-pink-100">
-        <i data-lucide="volume-2" id="music-icon" class="w-5 h-5"></i>
+    <!-- Botón visible desde el inicio, con animación de pulso para invitar a tocarlo -->
+    <button id="music-control" class="fixed bottom-6 right-6 z-50 bg-white text-[#D48C9A] w-14 h-14 rounded-full shadow-[0_4px_20px_rgba(212,140,154,0.4)] hover:bg-pink-50 transition-all border border-pink-200 flex items-center justify-center animate-pulse">
+        <!-- Inicia con icono de silencio (volumen con X) para que el usuario sepa que está apagado -->
+        <i data-lucide="volume-x" id="music-icon" class="w-6 h-6"></i>
     </button>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let musicStarted = false;
             const bgMusic = document.getElementById('bg-music');
             const musicControl = document.getElementById('music-control');
             const musicIcon = document.getElementById('music-icon');
+            let isPlaying = false;
 
-            // Forzar el inicio en el segundo 35 por si el navegador ignora el #t=35
-            bgMusic.currentTime = 35;
+            // Aseguramos que el audio comience en el seg 35 cuando los datos de la canción carguen
+            bgMusic.addEventListener('loadedmetadata', () => {
+                bgMusic.currentTime = 35;
+            });
+            // Respaldo por si el navegador carga instantáneamente la canción
+            if (bgMusic.readyState >= 1) {
+                bgMusic.currentTime = 35;
+            }
 
-            const startMusic = () => {
-                if (!musicStarted) {
-                    // Solo intentar reproducir si no ha empezado
-                    bgMusic.play().then(() => {
-                        musicStarted = true;
-                        musicControl.classList.remove('hidden');
-                    }).catch(error => {
-                        console.log("Esperando interacción para audio.");
-                    });
-                }
-            };
-
-            // Escuchar clics o toques en cualquier parte del documento
-            document.body.addEventListener('click', startMusic, { once: true });
-            document.body.addEventListener('touchstart', startMusic, { once: true });
-
-            // Control del botón flotante
-            musicControl.addEventListener('click', (e) => {
-                e.stopPropagation(); // Evitar que el clic active el evento general
-                if (bgMusic.paused) {
-                    bgMusic.play();
-                    musicIcon.setAttribute('data-lucide', 'volume-2');
-                } else {
+            const toggleMusic = () => {
+                if (isPlaying) {
                     bgMusic.pause();
                     musicIcon.setAttribute('data-lucide', 'volume-x');
+                    // Opcional: regresar el pulso si se pausa
+                    musicControl.classList.add('animate-pulse');
+                } else {
+                    bgMusic.play().then(() => {
+                        musicIcon.setAttribute('data-lucide', 'volume-2');
+                        // Quitamos el pulso porque ya descubrieron el botón
+                        musicControl.classList.remove('animate-pulse');
+                    }).catch(error => {
+                        console.log("El navegador requiere interacción manual", error);
+                    });
                 }
-                lucide.createIcons();
+                isPlaying = !isPlaying;
+                lucide.createIcons(); // Actualizar el dibujo del icono
+            };
+
+            // Escuchar clics en el botón directamente
+            musicControl.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evitar choques con otros toques
+                toggleMusic();
             });
+
+            // Auto-play al primer toque en cualquier parte de la pantalla (opcional)
+            const autoPlayAttempt = () => {
+                if (!isPlaying) {
+                    toggleMusic();
+                }
+            };
+            document.body.addEventListener('click', autoPlayAttempt, { once: true });
+            document.body.addEventListener('touchstart', autoPlayAttempt, { once: true });
         });
     </script>
 </body>
