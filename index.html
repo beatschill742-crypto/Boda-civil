@@ -403,7 +403,7 @@
                     procesarURL(); 
                     lucide.createIcons(); 
                     this.startFlowers();
-                    this.setupMusic();
+                    this.spawnMagicStars();
 
                     setInterval(() => {
                         const now = new Date().getTime();
@@ -455,7 +455,28 @@
 
                         document.body.appendChild(el);
                         setTimeout(() => el.remove(), 10000);
-                    }, 1000);
+                    }, 800);
+                },
+
+                spawnMagicStars() {
+                    const container = document.getElementById('magic-stars-container');
+                    const starIcons = ['✨', '✦', '⋆', '✧'];
+                    
+                    // Creamos 35 estrellas flotantes
+                    for(let i=0; i<35; i++) {
+                        const star = document.createElement('div');
+                        star.classList.add('star-magic');
+                        star.innerText = starIcons[Math.floor(Math.random() * starIcons.length)];
+                        
+                        // Posición y animaciones aleatorias
+                        star.style.left = Math.random() * 100 + 'vw';
+                        star.style.top = Math.random() * 100 + 'vh';
+                        star.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                        star.style.animationDelay = (Math.random() * 5) + 's';
+                        
+                        container.appendChild(star);
+                    }
                 }
             }
         }
