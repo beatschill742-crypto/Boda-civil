@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda - Sofía & Mateo</title>
+    
+    <!-- Librerías Necesarias -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- Fuentes Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #FDFBF7; /* Marfil / Ivory muy elegante */
+            color: #1F2937; 
+            overflow-x: hidden;
+        }
+        .font-serif-elegant { font-family: 'Playfair Display', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        
+        /* Paleta de Colores: Oro y Carbón */
+        .primary-color { color: #D4AF37; } /* Dorado */
+        .primary-bg { background-color: #D4AF37; }
+        .text-carbon { color: #2C3E50; }
+        
+        .gold-gradient-text { 
+            background: linear-gradient(135deg, #b38728, #D4AF37, #b38728); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .gold-bg-gradient { 
+            background: linear-gradient(135deg, #b38728, #D4AF37); 
+        }
+
+        /* Animaciones suaves */
+        .fade-in-up { animation: fadeInUp 1.2s ease-out forwards; opacity: 0; transform: translateY(30px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Fondo del Hero con efecto Parallax simulado */
+        .hero-bg {
+            background-image: 
+                linear-gradient(to bottom, rgba(31, 41, 55, 0.4), rgba(31, 41, 55, 0.7)),
+                url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Separador Elegante Floral/Minimalista */
+        .separator { display: flex; align-items: center; justify-content: center; margin: 3rem 0; }
+        .separator::before, .separator::after { content: ''; height: 1px; width: 80px; background-color: #D4AF37; opacity: 0.5; }
+        .separator-icon { margin: 0 15px; color: #D4AF37; }
+    </style>
+</head>
+
+<body x-data="invitationApp()" x-init="initTimer()" class="relative antialiased">
+
+    <!-- HERO SECTION -->
+    <header class="hero-bg min-h-screen flex flex-col items-center justify-center relative px-4 text-center">
+        <!-- Borde interior elegante -->
+        <div class="absolute inset-4 md:inset-8 border border-white/20 rounded-sm pointer-events-none"></div>
+        <div class="absolute inset-5 md:inset-9 border border-white/10 rounded-sm pointer-events-none"></div>
+
+        <div class="relative z-10 fade-in-up flex flex-col items-center">
+            <p class="font-serif-elegant text-xs md:text-sm uppercase tracking-[0.4em] text-white/80 mb-6 font-light">Nos Casamos</p>
+            
+            <h1 class="font-cursive text-7xl md:text-9xl text-white mb-2 drop-shadow-lg" style="text-shadow: 2px 4px 10px rgba(0,0,0,0.3);">
+                Sofía
+            </h1>
+            <span class="font-serif-elegant text-4xl md:text-5xl primary-color italic my-2">&</span>
+            <h1 class="font-cursive text-7xl md:text-9xl text-white mt-2 drop-shadow-lg" style="text-shadow: 2px 4px 10px rgba(0,0,0,0.3);">
+                Mateo
+            </h1>
+            
+            <div class="w-24 h-px bg-[#D4AF37] my-8"></div>
+            
+            <p class="text-sm font-medium uppercase tracking-[0.3em] text-white mb-3">05 · Septiembre · 2026</p>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-white/70">Estado de México</p>
+        </div>
+        
+        <div class="absolute bottom-10 animate-bounce text-white/60">
+            <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </div>
+    </header>
+
+    <!-- NUESTRA HISTORIA / FRASE -->
+    <section class="py-24 px-6 relative bg-[#FDFBF7]">
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <i data-lucide="heart" class="w-8 h-8 primary-color opacity-50 mx-auto mb-8 fill-current"></i>
+            <h2 class="font-serif-elegant text-2xl md:text-4xl text-carbon mb-8 leading-relaxed font-light italic px-4">
+                "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
+            </h2>
+            <p class="font-serif-elegant text-sm uppercase tracking-widest text-gray-500">Con la bendición de nuestros padres</p>
+        </div>
+    </section>
+
+    <!-- CUENTA REGRESIVA -->
+    <section class="py-16 px-4 bg-white border-y border-gray-100 text-center">
+        <h2 class="font-serif-elegant text-sm uppercase tracking-[0.3em] text-gray-400 mb-10">Faltan</h2>
+        
+        <div class="flex justify-center gap-4 md:gap-8 max-w-lg mx-auto">
+            <div class="flex flex-col items-center">
+                <span class="font-serif-elegant text-4xl md:text-5xl text-carbon font-normal" x-text="days">00</span>
+                <span class="text-[9px] uppercase tracking-widest text-gray-400 mt-3 font-medium">Días</span>
+            </div>
+            <span class="text-3xl text-gray-200 font-light hidden md:block">:</span>
+            <div class="flex flex-col items-center">
+                <span class="font-serif-elegant text-4xl md:text-5xl text-carbon font-normal" x-text="hours">00</span>
+                <span class="text-[9px] uppercase tracking-widest text-gray-400 mt-3 font-medium">Hrs</span>
+            </div>
+            <span class="text-3xl text-gray-200 font-light hidden md:block">:</span>
+            <div class="flex flex-col items-center">
+                <span class="font-serif-elegant text-4xl md:text-5xl text-carbon font-normal" x-text="minutes">00</span>
+                <span class="text-[9px] uppercase tracking-widest text-gray-400 mt-3 font-medium">Min</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ITINERARIO -->
+    <section class="py-24 px-4 bg-[#FDFBF7]">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-serif-elegant text-3xl md:text-4xl text-carbon mb-4">Dónde & Cuándo</h2>
+                <div class="w-16 h-px bg-[#D4AF37] mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Ceremonia -->
+                <div class="bg-white p-10 shadow-xl text-center relative border border-gray-100 flex flex-col items-center h-full">
+                    <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-6 border border-[#D4AF37]/30">
+                        <i data-lucide="church" class="w-7 h-7 primary-color"></i>
+                    </div>
+                    <h3 class="font-serif-elegant text-2xl text-carbon mb-2">Ceremonia Religiosa</h3>
+                    <p class="text-sm uppercase tracking-[0.2em] text-[#D4AF37] font-bold mb-6">18:00 Hrs</p>
+                    
+                    <p class="font-serif-elegant font-bold text-gray-800 mb-1">Locación del Evento</p>
+                    <p class="text-xs text-gray-500 mb-8 font-light flex-grow">La ceremonia se llevará a cabo en nuestras instalaciones.</p>
+                    
+                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-carbon text-carbon px-6 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-carbon hover:text-white transition-colors duration-300">
+                        Ver Ubicación
+                    </button>
+                </div>
+
+                <!-- Recepción -->
+                <div class="bg-white p-10 shadow-xl text-center relative border border-gray-100 flex flex-col items-center h-full">
+                    <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-6 border border-[#D4AF37]/30">
+                        <i data-lucide="glass-water" class="w-7 h-7 primary-color"></i>
+                    </div>
+                    <h3 class="font-serif-elegant text-2xl text-carbon mb-2">Recepción</h3>
+                    <p class="text-sm uppercase tracking-[0.2em] text-[#D4AF37] font-bold mb-6">19:30 Hrs</p>
+                    
+                    <p class="font-serif-elegant font-bold text-gray-800 mb-1">Locación del Evento</p>
+                    <p class="text-xs text-gray-500 mb-8 font-light flex-grow">Acompáñanos a celebrar justo después de la ceremonia.</p>
+                    
+                    <button onclick="window.open('https://maps.app.goo.gl/3Etjyw52VX42W9TXA?g_st=iw', '_blank')" class="w-full bg-transparent border border-carbon text-carbon px-6 py-3 text-[10px] uppercase tracking-[0.2em] hover:bg-carbon hover:text-white transition-colors duration-300">
+                        Ver Ubicación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓDIGO DE VESTIMENTA & REGALOS -->
+    <section class="py-20 px-4 bg-white border-t border-gray-100 text-center">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            <div class="flex flex-col items-center">
+                <i data-lucide="shirt" class="w-8 h-8 primary-color mb-4 font-light"></i>
+                <h3 class="font-serif-elegant text-lg text-carbon font-bold mb-2 uppercase tracking-widest">Vestimenta</h3>
+                <p class="text-sm text-gray-500 font-light mb-2">Formal / Etiqueta</p>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest border-t border-gray-200 pt-2 mt-2">No blanco. No marfil.</p>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <i data-lucide="gift" class="w-8 h-8 primary-color mb-4"></i>
+                <h3 class="font-serif-elegant text-lg text-carbon font-bold mb-2 uppercase tracking-widest">Mesa de Regalos</h3>
+                <p class="text-sm text-gray-500 font-light mb-4 px-4">Su presencia es nuestro mayor regalo. Si desean tener un detalle:</p>
+                <div class="flex gap-2">
+                    <span class="text-[10px] border border-gray-300 px-3 py-1 text-gray-600">Liverpool: 123456</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <i data-lucide="baby" class="w-8 h-8 primary-color mb-4"></i>
+                <h3 class="font-serif-elegant text-lg text-carbon font-bold mb-2 uppercase tracking-widest">Recepción</h3>
+                <p class="text-sm text-gray-500 font-light mb-2">Solo Adultos</p>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest border-t border-gray-200 pt-2 mt-2 px-6">Agradecemos su comprensión.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PASE DE ACCESO (SIMULADOR VIP) -->
+    <section id="pase-acceso" class="py-24 px-4 bg-carbon relative" style="background-color: #1a1a1a;">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 40px 40px;"></div>
+        
+        <div class="max-w-md mx-auto relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="font-serif-elegant text-3xl text-white mb-2">RSVP & Acceso</h2>
+                <p class="text-gray-400 text-xs uppercase tracking-widest font-light">Pase Digital Intransferible</p>
+            </div>
+
+            <!-- Contenedor del Pase -->
+            <div class="bg-white rounded-sm shadow-2xl overflow-hidden relative">
+                
+                <div id="progress-bar" class="h-1.5 w-full bg-[#D4AF37] transition-colors duration-500"></div>
+
+                <div class="p-8 text-center">
+                    
+                    <!-- ESTADO 1: BLOQUEADO (SIMULADOR) -->
+                    <div id="pantalla-bloqueada" class="transition-opacity duration-500">
+                        <div class="bg-[#FDFBF7] p-6 mb-4 relative border border-gray-200">
+                            
+                            <!-- Display con el nombre leído de la URL -->
+                            <div class="mb-6">
+                                <p class="text-[9px] uppercase tracking-widest text-gray-400 mb-2">Invitación para:</p>
+                                <p id="nombre-display" class="font-serif-elegant font-bold text-xl text-carbon">Familia Invitada</p>
+                            </div>
+
+                            <p class="text-xs text-gray-600 mb-6 leading-relaxed">Para confirmar su asistencia, revelar su número de mesa y obtener su <b>código QR de acceso</b>, por favor ingrese su número celular a 10 dígitos.</p>
+                            
+                            <input type="tel" id="telefono" placeholder="Ej: 5512345678" maxlength="10" class="w-full bg-white border border-gray-300 text-gray-800 px-4 py-3 text-center text-sm focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] mb-4 font-mono tracking-widest transition-all">
+                            
+                            <p id="error-msg" class="text-red-500 text-[10px] uppercase tracking-wider mb-4 hidden">Ingresa un número válido</p>
+                            
+                            <button id="btn-activar" class="w-full gold-bg-gradient text-white font-bold py-3 text-[10px] uppercase tracking-[0.2em] shadow-md hover:shadow-lg transition-all">
+                                Confirmar y Revelar Pase
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ESTADO 2: DESBLOQUEADO (SIMULADOR DE EXITO) -->
+                    <div id="pantalla-desbloqueada" class="hidden transition-opacity duration-500">
+                        
+                        <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-6 flex items-start gap-3 text-left">
+                            <i data-lucide="camera" class="w-5 h-5 animate-pulse mt-0.5 shrink-0"></i>
+                            <p class="text-[9px] leading-relaxed uppercase tracking-wider">Toma captura de pantalla a este código ahora.<br><span class="font-bold">El recinto no cuenta con señal de internet.</span></p>
+                        </div>
+
+                        <div class="w-full bg-[#FDFBF7] border border-gray-200 p-6 mb-6 text-center">
+                            <p class="text-[8px] uppercase tracking-widest text-gray-400 mb-2 font-bold">Asistencia Confirmada</p>
+                            <p id="nombre-final" class="font-serif-elegant font-bold text-2xl text-carbon mb-4">Familia Invitada</p>
+                            <div class="inline-block border border-carbon text-carbon px-8 py-2 text-xs uppercase tracking-[0.2em]" id="mesa-final">Mesa 5</div>
+                        </div>
+                        
+                        <!-- Contenedor del QR -->
+                        <div class="p-4 bg-white border border-gray-200 shadow-sm inline-block relative mb-4">
+                            <!-- Esquinas elegantes -->
+                            <div class="absolute top-0 left-0 w-4 h-4 border-t border-l border-carbon"></div>
+                            <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-carbon"></div>
+                            <div class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-carbon"></div>
+                            <div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-carbon"></div>
+
+                            <div id="qrcode-container" class="w-[160px] h-[160px] flex items-center justify-center"></div>
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <p class="text-[9px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Pase Activo</p>
+                            <p class="text-[9px] text-gray-500 leading-relaxed px-4">Muestra este código a la hostess en la entrada del evento. Es único e intransferible.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <p class="text-center mt-8 text-[9px] text-gray-500 uppercase tracking-widest font-light">Diseño y Logística Inteligente por EventTech</p>
+        </div>
+    </section>
+
+    <script>
+        // Variables para Demostración (Igual que en XV años)
+        let invitadoUrl = "Invitado Especial";
+        let mesaUrl = "Pendiente";
+
+        // Leer datos de la URL (Ejemplo: ?id=Familia-Gomez-m5)
+        function procesarURL() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                const partes = id.split('-m');
+                invitadoUrl = partes[0].replace(/-/g, ' ').toUpperCase();
+                if(partes.length > 1) {
+                    mesaUrl = partes[1];
+                }
+                document.getElementById('nombre-display').innerText = invitadoUrl;
+            }
+        }
+
+        // Lógica del Botón en MODO DEMO
+        document.getElementById('btn-activar').addEventListener('click', () => {
+            const tel = document.getElementById('telefono').value;
+            const btn = document.getElementById('btn-activar');
+            const err = document.getElementById('error-msg');
+
+            // Validar teléfono
+            if (tel.length < 10 || isNaN(tel)) {
+                err.innerText = "Ingresa 10 números, por favor.";
+                err.classList.remove('hidden');
+                return;
+            }
+
+            // Simular carga
+            err.classList.add('hidden');
+            btn.innerText = "PROCESANDO...";
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Timeout de 1.5s para realismo
+            setTimeout(() => {
+                // Transición
+                document.getElementById('pantalla-bloqueada').classList.add('hidden');
+                document.getElementById('pantalla-desbloqueada').classList.remove('hidden');
+                document.getElementById('progress-bar').classList.replace('bg-[#D4AF37]', 'bg-emerald-500');
+                
+                // Textos Finales
+                document.getElementById('nombre-final').innerText = invitadoUrl;
+                document.getElementById('mesa-final').innerText = "Mesa " + mesaUrl;
+
+                // Generar QR que apunta a la hostess de prueba
+                const urlBase = window.location.href.split('?')[0].replace('boda_demo.html', '');
+                const baseUrlClean = urlBase.endsWith('/') ? urlBase : urlBase + '/';
+                const enlaceParaHostess = baseUrlClean + "pases.html?invitado=" + encodeURIComponent(invitadoUrl) + "&mesa=" + encodeURIComponent(mesaUrl);
+
+                new QRCode(document.getElementById("qrcode-container"), {
+                    text: enlaceParaHostess,
+                    width: 160,
+                    height: 160,
+                    colorDark : "#1F2937",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.M
+                });
+            }, 1500);
+        });
+
+        // Control del Reloj con Alpine.js
+        window.invitationApp = function() {
+            return {
+                days: '00', hours: '00', minutes: '00',
+                targetDate: new Date('September 05, 2026 18:00:00').getTime(),
+
+                initTimer() {
+                    procesarURL(); 
+                    lucide.createIcons(); 
+
+                    setInterval(() => {
+                        const now = new Date().getTime();
+                        const distance = this.targetDate - now;
+                        if (distance < 0) return;
+                        this.days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                        this.hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                        this.minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+
+    <!-- REPRODUCTOR DE MÚSICA Y BOTÓN FLOTANTE -->
+    <audio id="bg-music" loop preload="auto">
+        <!-- IMPORTANTE: El nombre del archivo debe coincidir exactamente con el que subas a GitHub, incluyendo el .mp3 -->
+        <source src="Julión Álvarez y su Norteño Banda - Regalo de Dios (Video Lyric).mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-control" class="fixed bottom-6 right-6 z-50 bg-[#D4AF37] text-white p-4 rounded-full shadow-2xl hidden hover:bg-[#b38728] transition-all transform hover:scale-105 border border-white/20">
+        <i data-lucide="volume-2" id="music-icon" class="w-5 h-5"></i>
+    </button>
+
+    <script>
+        // LÓGICA PARA ACTIVAR LA MÚSICA AL PRIMER TOQUE
+        document.addEventListener('DOMContentLoaded', () => {
+            let musicStarted = false;
+            const bgMusic = document.getElementById('bg-music');
+            const musicControl = document.getElementById('music-control');
+            const musicIcon = document.getElementById('music-icon');
+
+            // Escuchar cualquier clic o toque en la pantalla
+            const startMusic = () => {
+                if (!musicStarted) {
+                    bgMusic.play().then(() => {
+                        musicStarted = true;
+                        musicControl.classList.remove('hidden'); // Mostrar el botoncito dorado
+                    }).catch(error => {
+                        console.log("Esperando interacción del usuario para reproducir audio.");
+                    });
+                }
+            };
+
+            // Intentamos activarla con click o cuando tocan la pantalla (touch)
+            document.body.addEventListener('click', startMusic);
+            document.body.addEventListener('touchstart', startMusic);
+
+            // Lógica del botón flotante para pausar/reproducir
+            musicControl.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evita que el clic del botón dispare el evento de la pantalla de nuevo
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicIcon.setAttribute('data-lucide', 'volume-2');
+                } else {
+                    bgMusic.pause();
+                    musicIcon.setAttribute('data-lucide', 'volume-x');
+                }
+                lucide.createIcons(); // Recargar el ícono cambiado
+            });
+        });
+    </script>
+</body>
+</html>
